@@ -1,0 +1,24 @@
+
+
+CREATE COMPUTE MODULE MyTest_Flow_Compute
+	CREATE FUNCTION Main() RETURNS BOOLEAN
+	BEGIN
+
+		SET OutputRoot = InputRoot;
+		
+		-- Check for the source input and define variables for route
+		if InputRoot.Properties.ReplyProtocol = 'MQ' then 
+			SET Environment.Variables.Source = 'MQ';
+		
+		ELSEIF InputRoot.Properties.ReplyProtocol = 'SOAP-AXIS2' then
+			SET Environment.Variables.Source = 'SOAP';
+		end if;
+	
+		-- Do any Computation that need to be done here. 
+	
+		RETURN TRUE;
+	END;
+	
+
+
+END MODULE;
